@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     .catch(err => {
         console.log(err)
         res.status(500).json({
-            message: 'Error retrieving the posts'
+            message: 'The posts information could not be retrieved'
         });      
     });
 });
@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
             res.status(200).json(post);
         } else {
             res.status(404).json({
-                message: 'Post not found'
+                message: 'The post with the specified ID does not exist.'
             });
         }
     })
@@ -36,6 +36,24 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/:id/comments', (req, res) => {
+  Posts.findPostComments(req.params.id)
+  .then(comments => {
+      if (comments) {
+          res.status(200).json({ data: comments });
+      } else {
+          res.status(404).json({
+              message: 'The post with the specified ID does not exist.'
+          });
+      }
+  })  
+  .catch(err => {
+      console.log(err);
+      res.status(500).json({
+          message: 'The comments information could not be retrieved.'
+      });
+  })
+})
 
 
 
