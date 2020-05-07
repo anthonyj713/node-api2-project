@@ -123,9 +123,9 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req,res) => {
-    if(!req.body.title && !req.body.contents){
+    if(!req.body.title || !req.body.contents){
         res.status(400).json({
-            message: 'Please provide a title and content'
+            message: 'Please provide a title or content'
         })
     } else {
         Posts.update(req.params.id, req.body)
